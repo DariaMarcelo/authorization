@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <nav class="navbar navbar-expand-lg">
+    <p class="app-title">Assessments App</p>
+    <div class="container-right">
+      <div class="container-fluid">
+        <div *ngIf="isAdmin && isAuthorized">
+          <a class="app-brand" href="admin-admin">Users</a>
+        </div>
+        <div *ngIf="isAuthorized">
+          <a class="app-brand" href="" (click)="logout()">Log out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</mat-toolbar>
