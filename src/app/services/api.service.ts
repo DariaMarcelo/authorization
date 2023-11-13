@@ -2,7 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_URL } from '../constants/auth-api';
-import { IUser, IAssessment, IAssessmentReport } from '../interfaces/user.interface';
+import { IUser } from '../interfaces/user.interface';
+import { IAssessment, IAssessmentReport } from "../interfaces/dashboard.interface";
 
 @Injectable({
   providedIn: 'root',

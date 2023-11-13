@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as UserActions from './actions';
-import { IAssessment, IAssessmentReport, IUser } from 'src/app/interfaces/user.interface';
+import { IUser } from 'src/app/interfaces/user.interface';
+import { IAssessment, IAssessmentReport } from "../interfaces/dashboard.interface";
 
 export interface UserState {
   user: IUser | null;

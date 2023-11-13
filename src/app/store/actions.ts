@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { IAssessment, IAssessmentReport, IUser } from 'src/app/interfaces/user.interface';
+import { IUser } from 'src/app/interfaces/user.interface';
+import { IAssessment, IAssessmentReport } from "../interfaces/dashboard.interface";
 
 export const login = createAction(
   '[Assessment App] Login',

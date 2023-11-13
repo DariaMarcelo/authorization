@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { IAssessment } from 'src/app/interfaces/user.interface';
+import { IAssessment } from 'src/app/interfaces/dashboard.interface';
 import * as UserActions from '../../store/actions';
 import { GlobalState } from 'src/app/store/reducers';
 import { Store } from '@ngrx/store';
