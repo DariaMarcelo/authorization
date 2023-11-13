@@ -39,17 +39,25 @@
 .id-column {
   width: 15%;
 }
+
 .name-column {
   width: 30%;
 }
+
 .resolved-column {
   width: 15%;
 }
+
 .active-column {
   width: 15%;
 }
+
 .image-column {
   width: 20%;
+
+  & img {
+    height: 100px;
+  }
 }
 
 td {

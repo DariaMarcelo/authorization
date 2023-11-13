@@ -23,13 +23,14 @@ import { Interceptor } from './interceptors/interceptor';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AssessmentDetailsComponent } from './components/assessment-details/assessment-details.component';
 import { ActionReducerMap, StoreModule } from '@ngrx/store';
-import { GlobalState, userReducers } from './store/reducers';
+import { dashboardReducers, GlobalState, userReducers } from './store/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { UserAssessmentEffects } from './store/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 const userReducerMap: ActionReducerMap<GlobalState> = {
   userData: userReducers,
+  dashboard: dashboardReducers,
 };
 
 @NgModule({

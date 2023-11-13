@@ -1,134 +1,138 @@
 import { createReducer, on } from '@ngrx/store';
-import * as UserActions from './actions';
+import { UserActions, DashboardActions } from './actions';
 import { IUser } from 'src/app/interfaces/user.interface';
 import { IAssessment, IAssessmentReport } from "../interfaces/dashboard.interface";
 
 export interface UserState {
   user: IUser | null;
+  usersTotal: IUser[] | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export interface DashboardState {
   assessments: IAssessment[] | null;
   assessmentReport: IAssessmentReport | null;
-  usersTotal: IUser[] | null;
   loading: boolean;
   error: string | null;
 }
 
 export interface GlobalState {
   userData: UserState;
+  dashboard: DashboardState;
 }
 
-const initialState: UserState = {
+const initialUserState: UserState = {
   user: null,
-  assessments: null,
-  assessmentReport: null,
   usersTotal: null,
   loading: false,
   error: null,
 };
 
+const initialDashboardState: DashboardState = {
+  assessments: null,
+  assessmentReport: null,
+  loading: false,
+  error: null,
+}
+
 export const initialGlobalState: GlobalState = {
-  userData: initialState,
+  userData: initialUserState,
+  dashboard: initialDashboardState,
 };
 
 export const userReducers = createReducer(
-  initialState,
+  initialUserState,
   on(UserActions.login, (state, { email, password }) => {
-    const result = {
+    return {
       ...state,
       loading: true,
     };
-    return result;
   }),
   on(UserActions.loginSuccess, (state, { userResponse }) => {
-    const result = {
+    return {
       ...state,
       loading: false,
       user: userResponse,
       error: null,
     };
-    return result;
   }),
   on(UserActions.loginError, (state, { error }) => {
-    const result = {
+    return {
       ...state,
       loading: false,
       user: null,
       error: error,
     };
-    return result;
-  }),
-  on(UserActions.getAssessments, (state) => {
-    const result = {
-      ...state,
-      loading: true,
-    };
-    return result;
-  }),
-  on(UserActions.assessmentsLoaded, (state, { assessmentResponse }) => {
-    const result = {
-      ...state,
-      loading: false,
-      assessments: assessmentResponse,
-      error: null,
-    };
-    return result;
-  }),
-  on(UserActions.assessmentsLoadError, (state, { error }) => {
-    const result = {
-      ...state,
-      loading: false,
-      assessments: null,
-      error: error,
-    };
-    return result;
-  }),
-  on(UserActions.getAssessmentReport, (state) => {
-    const result = {
-      ...state,
-      loading: true,
-    };
-    return result;
-  }),
-  on(UserActions.assessmentReportLoaded, (state, { reportResponse }) => {
-    const result = {
-      ...state,
-      loading: false,
-      assessmentReport: reportResponse,
-      error: null,
-    };
-    return result;
-  }),
-  on(UserActions.assessmentReportLoadError, (state, { error }) => {
-    const result = {
-      ...state,
-      loading: false,
-      assessmentReport: null,
-      error: error,
-    };
-    return result;
   }),
   on(UserActions.getUsers, (state) => {
-    const result = {
+    return {
       ...state,
       loading: true,
     };
-    return result;
   }),
   on(UserActions.usersLoaded, (state, { userResponse }) => {
-    const result = {
+    return {
       ...state,
       loading: false,
       usersTotal: userResponse,
       error: null,
     };
-    return result;
   }),
   on(UserActions.usersLoadError, (state, { error }) => {
-    const result = {
+    return {
       ...state,
       loading: false,
       usersTotal: null,
       error: error,
     };
-    return result;
-  })
+  }),
 );
+
+export const dashboardReducers = createReducer(
+  initialDashboardState,
+  on(DashboardActions.getAssessments, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+  on(DashboardActions.assessmentsLoaded, (state, { assessmentResponse }) => {
+    return {
+      ...state,
+      loading: false,
+      assessments: assessmentResponse,
+      error: null,
+    };
+  }),
+  on(DashboardActions.assessmentsLoadError, (state, { error }) => {
+    return {
+      ...state,
+      loading: false,
+      assessments: null,
+      error: error,
+    };
+  }),
+  on(DashboardActions.getAssessmentReport, (state) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+  on(DashboardActions.assessmentReportLoaded, (state, { reportResponse }) => {
+    return {
+      ...state,
+      loading: false,
+      assessmentReport: reportResponse,
+      error: null,
+    };
+  }),
+  on(DashboardActions.assessmentReportLoadError, (state, { error }) => {
+    return {
+      ...state,
+      loading: false,
+      assessmentReport: null,
+      error: error,
+    };
+  }),
+)

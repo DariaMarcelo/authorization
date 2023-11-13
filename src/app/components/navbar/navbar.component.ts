@@ -10,15 +10,12 @@ export class NavbarComponent implements OnInit {
   isAdmin!: boolean;
   isAuthorized!: boolean;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.isAuthorized = authService.isAuthorized
+  }
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isAdmin();
-    if (this.authService.getToken() !== null) {
-      this.isAuthorized = true;
-    } else {
-      this.isAuthorized = false;
-    }
   }
 
   logout(): void {

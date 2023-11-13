@@ -10,10 +10,15 @@ import { IUser } from '../interfaces/user.interface';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<IUser> {
+  get isAuthorized(): boolean {
+    return this.getToken() !== null;
+  }
+
+  public login(email: string, password: string): Observable<IUser> {
     const params = new HttpParams()
       .set('email', email)
       .set('password', password);
+
     return this.http.post<IUser>(`${API_URL}/api/login`, params, {
       headers: { skip: 'true' },
     });

@@ -25,8 +25,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     'position',
   ];
   dataSource$ = this.store.select(selectAllUsers);
-  dataSourcePerPage!: IUser[];
-  allDataSource!: IUser[];
+  dataSourcePerPage: IUser[] = [];
+  allDataSource: IUser[] = [];
   page = 0;
   pageSize = 5;
   stateData$ = this.store.select(selectActiveUserData);
@@ -37,21 +37,25 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.stateData$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      if (value.loading) {
-        this.showData = false;
-      } else {
-        this.showData = true;
-      }
+      this.showData = !value.loading;
     });
 
     this.store.dispatch(UserActions.getUsers());
     this.dataSource$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      this.allDataSource = value!;
+      if (!this.valueIsUsers(value)) {
+        return
+      }
+
+      this.allDataSource = value;
       this.getDataForPagination({
         pageIndex: this.page,
         pageSize: this.pageSize,
       });
     });
+  }
+
+  private valueIsUsers(value: any): value is IUser[] {
+    return value && Array.isArray(value) && !value.some((item) => !('role' in item));
   }
 
   ngOnDestroy(): void {

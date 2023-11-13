@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
-  constructor( private formBuilder: FormBuilder, private store: Store<UserState>) {}
+  constructor(private formBuilder: FormBuilder, private store: Store<UserState>) {}
 
   ngOnInit() {
     this.createForm();
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         UserActions.login({
           email: userValue.email,
           password: userValue.password,
-        })
+        }),
       );
       this.stateData$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
         if (value.error !== null) {

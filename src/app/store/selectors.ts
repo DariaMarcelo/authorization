@@ -1,24 +1,30 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { UserState } from './reducers';
+import { UserState, DashboardState } from './reducers';
 
 export const userFeature = createFeatureSelector<UserState>('userData');
+export const dashboardFeature = createFeatureSelector<DashboardState>('dashboard');
 
 export const selectActiveUserData = createSelector(
   userFeature,
-  (state) => state
+  (state) => state,
 );
 
 export const selectAllUsers = createSelector(
   userFeature,
-  (state) => state.usersTotal
+  (state) => state.usersTotal,
 );
 
 export const selectAssessmentsData = createSelector(
-  userFeature,
-  (state) => state.assessments
+  dashboardFeature,
+  (state) => state.assessments,
 );
 
 export const selectAssessmentReport = createSelector(
-  userFeature,
-  (state) => state.assessmentReport
+  dashboardFeature,
+  (state) => state.assessmentReport,
+);
+
+export const selectAssessmentReportLoading = createSelector(
+  dashboardFeature,
+  (state) => state.loading,
 );

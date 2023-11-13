@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { IAssessment } from 'src/app/interfaces/dashboard.interface';
-import * as UserActions from '../../store/actions';
+import { IAssessment } from "../../interfaces/dashboard.interface";
+import { DashboardActions } from '../../store/actions';
 import { GlobalState } from 'src/app/store/reducers';
 import { Store } from '@ngrx/store';
 import { selectActiveUserData, selectAssessmentsData } from 'src/app/store/selectors';
@@ -36,22 +36,22 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.stateData$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      if (value.loading) {
-        this.showData = false;
-      } else {
-        this.showData = true;
-      }
+      this.showData = !value.loading;
     });
 
-    this.store.dispatch(UserActions.getAssessments());
+    this.store.dispatch(DashboardActions.getAssessments());
 
     this.dataSource$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      this.allDataSource = value!;
+      this.allDataSource = this.valueIsAssessments(value) ? value : [];
       this.getDataForPagination({
         pageIndex: this.page,
         pageSize: this.pageSize,
       });
     });
+  }
+
+  private valueIsAssessments(value: any): value is IAssessment[] {
+    return value && Array.isArray(value) && !value.some((item) => !('users_resolved' in item));
   }
 
   getDataForPagination(pagination: { pageIndex: number; pageSize: number }) {
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
       endingIndex = startingIndex + pagination.pageSize;
     this.dataSourcePerPage = this.allDataSource.filter(() => {
       index++;
-      return index > startingIndex && index <= endingIndex ? true : false;
+      return (index > startingIndex && index <= endingIndex);
     });
   }
 }

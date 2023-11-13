@@ -20,11 +20,11 @@ export class ApiService {
   }
 
   getAssessmentReport(
-    assessmentId: string | null
+    assessmentId: string | null,
   ): Observable<IAssessmentReport> {
     const params = new HttpParams().set('id', assessmentId!);
     return this.http.get<IAssessmentReport>(
-      `${API_URL}/api/userassessments/graph?${params}`
+      `${API_URL}/api/userassessments/graph?${params}`,
     );
   }
 }
