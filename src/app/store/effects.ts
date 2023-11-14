@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { UserActions, DashboardActions } from './actions';
 import { ApiService } from 'src/app/services/api.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
 
 @Injectable()
