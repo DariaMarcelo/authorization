@@ -8,7 +8,13 @@ import { AssessmentDetailsComponent } from './components/assessment-details/asse
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: 'login',
+    loadChildren: async () =>
+      (await import('./lazy-loading/lazy-loading.module'))
+        .LazyLoadingModule,
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -20,7 +26,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin-admin',
+    path: 'admin',
     component: AdminComponent,
     canActivate: [AdminGuard],
   },

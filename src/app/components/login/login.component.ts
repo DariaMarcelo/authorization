@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       ]),
       password: new FormControl<string>('', [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
       ]),
     });
   }
@@ -41,10 +41,7 @@ export class LoginComponent implements OnInit {
     if (this.userLoginForm.valid) {
       const userValue = this.userLoginForm.getRawValue();
       this.store.dispatch(
-        UserActions.login({
-          email: userValue.email,
-          password: userValue.password,
-        }),
+        UserActions.login(userValue),
       );
       this.stateData$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
         if (value.error !== null) {
