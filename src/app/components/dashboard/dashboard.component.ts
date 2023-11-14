@@ -6,7 +6,6 @@ import { DashboardActions } from '../../store/actions';
 import { GlobalState } from 'src/app/store/reducers';
 import { Store } from '@ngrx/store';
 import { selectActiveUserData, selectAssessmentsData } from 'src/app/store/selectors';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -24,19 +23,32 @@ export class DashboardComponent implements OnInit {
     'active',
   ];
 
-
   dataSource$ = this.store.select(selectAssessmentsData);
-  dataSourcePerPage!: IAssessment[];
-  allDataSource = new MatTableDataSource<IAssessment>();
+  allDataSource: IAssessment[] = [];
   showData = false;
   stateData$ = this.store.select(selectActiveUserData);
+
+  paginationPageIdx = 0;
+  paginationPageSize = 3;
+
   destroy$: Subject<boolean> = new Subject<boolean>();
   private unsubscribe$ = new Subject<void>();
 
   constructor(
     private store: Store<GlobalState>,
     private router: Router,
-    private route: ActivatedRoute,) {}
+    private route: ActivatedRoute,
+  ) {}
+
+  get paginatedData(): IAssessment[] {
+    const startIdx = this.paginationPageSize * this.paginationPageIdx;
+    let endIdx = startIdx + this.paginationPageSize;
+    if (endIdx > this.allDataSource.length) {
+      endIdx = this.allDataSource.length;
+    }
+
+    return this.allDataSource.slice(startIdx, endIdx);
+  }
 
   ngOnInit(): void {
     this.stateData$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
@@ -45,15 +57,17 @@ export class DashboardComponent implements OnInit {
 
     this.store.dispatch(DashboardActions.getAssessments());
 
-    this.stateData$.pipe(takeUntil(this.unsubscribe$)).subscribe((assessment) => {
+    this.dataSource$.pipe(takeUntil(this.unsubscribe$)).subscribe((assessment) => {
       if (this.valueIsAssessments(assessment)) {
-        this.allDataSource.data = assessment;
-
-        if (this.paginator) {
-          this.paginator.pageIndex = this.paginator.pageIndex || 0;
-          this.paginator.pageSize = this.paginator.pageSize || 3;
-        }
+        this.allDataSource = assessment;
       }
+    });
+
+
+    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
+      const { pageIndex, pageSize } = params;
+      this.paginationPageIdx = +pageIndex || 0;
+      this.paginationPageSize = +pageSize || 3;
     });
   }
 
@@ -61,12 +75,12 @@ export class DashboardComponent implements OnInit {
     return value && Array.isArray(value) && !value.some((item) => !('users_resolved' in item));
   }
 
-  updateRoute(event: PageEvent): void {
+  onUpdateRoute(event: PageEvent): void {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
         pageIndex: event.pageIndex,
-        pageSize: event.pageSize
+        pageSize: event.pageSize,
       },
       queryParamsHandling: 'merge',
     });
