@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminComponent } from './components/admin/admin.component';
@@ -11,9 +10,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
-    loadChildren: async () =>
-      (await import('./lazy-loading/lazy-loading.module'))
-        .LazyLoadingModule,
+    loadChildren: () => import('./lazy-loading/lazy-loading.module'),
   },
   {
     path: 'dashboard',

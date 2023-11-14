@@ -46,7 +46,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </mat-table>
 
-      <mat-paginator [length]="dataSource.length" [pageSize]="pageSize" [pageSizeOptions]="[3, 5, 10]" (page)="getDataForPagination($event)"></mat-paginator>
+      <mat-paginator [length]="dataSource.length" [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" (page)="updateRoute($event)"></mat-paginator>
     </div>
   </div>
 

@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 import { IAssessment } from "../../interfaces/dashboard.interface";
 import { DashboardActions } from '../../store/actions';
 import { GlobalState } from 'src/app/store/reducers';
 import { Store } from '@ngrx/store';
 import { selectActiveUserData, selectAssessmentsData } from 'src/app/store/selectors';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,17 +24,19 @@ export class DashboardComponent implements OnInit {
     'active',
   ];
 
-  dataSource$ = this.store.select(selectAssessmentsData);
 
-  allDataSource!: IAssessment[];
+  dataSource$ = this.store.select(selectAssessmentsData);
   dataSourcePerPage!: IAssessment[];
-  page = 0;
-  pageSize = 3;
+  allDataSource = new MatTableDataSource<IAssessment>();
   showData = false;
   stateData$ = this.store.select(selectActiveUserData);
   destroy$: Subject<boolean> = new Subject<boolean>();
+  private unsubscribe$ = new Subject<void>();
 
-  constructor(private store: Store<GlobalState>) {}
+  constructor(
+    private store: Store<GlobalState>,
+    private router: Router,
+    private route: ActivatedRoute,) {}
 
   ngOnInit(): void {
     this.stateData$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
@@ -41,12 +45,15 @@ export class DashboardComponent implements OnInit {
 
     this.store.dispatch(DashboardActions.getAssessments());
 
-    this.dataSource$.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-      this.allDataSource = this.valueIsAssessments(value) ? value : [];
-      this.getDataForPagination({
-        pageIndex: this.page,
-        pageSize: this.pageSize,
-      });
+    this.stateData$.pipe(takeUntil(this.unsubscribe$)).subscribe((assessment) => {
+      if (this.valueIsAssessments(assessment)) {
+        this.allDataSource.data = assessment;
+
+        if (this.paginator) {
+          this.paginator.pageIndex = this.paginator.pageIndex || 0;
+          this.paginator.pageSize = this.paginator.pageSize || 3;
+        }
+      }
     });
   }
 
@@ -54,13 +61,14 @@ export class DashboardComponent implements OnInit {
     return value && Array.isArray(value) && !value.some((item) => !('users_resolved' in item));
   }
 
-  getDataForPagination(pagination: { pageIndex: number; pageSize: number }) {
-    let index = 0,
-      startingIndex = pagination.pageIndex * pagination.pageSize,
-      endingIndex = startingIndex + pagination.pageSize;
-    this.dataSourcePerPage = this.allDataSource.filter(() => {
-      index++;
-      return (index > startingIndex && index <= endingIndex);
+  updateRoute(event: PageEvent): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        pageIndex: event.pageIndex,
+        pageSize: event.pageSize
+      },
+      queryParamsHandling: 'merge',
     });
   }
 }
