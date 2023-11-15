@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IAssessment } from "../../interfaces/dashboard.interface";
-import { DashboardActions } from '../../store/actions';
-import { GlobalState } from 'src/app/store/reducers';
+import { DashboardActions } from '../../store/user/actions';
+import { GlobalState } from 'src/app/store/user/reducers';
 import { Store } from '@ngrx/store';
-import { selectActiveUserData, selectAssessmentsData } from 'src/app/store/selectors';
+import { selectActiveUserData, selectAssessmentsData } from 'src/app/store/user/selectors';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({

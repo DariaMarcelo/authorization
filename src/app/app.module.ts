@@ -16,16 +16,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './auth/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { Interceptor } from './interceptors/interceptor';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AssessmentDetailsComponent } from './components/assessment-details/assessment-details.component';
 import { ActionReducerMap, StoreModule } from '@ngrx/store';
-import { dashboardReducers, GlobalState, userReducers } from './store/reducers';
+import { dashboardReducers, GlobalState, userReducers } from './store/user/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { UserAssessmentEffects } from './store/effects';
+import { UserAssessmentEffects } from './store/user/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 const userReducerMap: ActionReducerMap<GlobalState> = {
@@ -36,7 +35,6 @@ const userReducerMap: ActionReducerMap<GlobalState> = {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     DashboardComponent,
     AdminComponent,
     NavbarComponent,

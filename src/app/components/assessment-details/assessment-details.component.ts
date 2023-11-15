@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectAssessmentReport, selectAssessmentReportLoading } from 'src/app/store/selectors';
+import { selectAssessmentReport, selectAssessmentReportLoading } from 'src/app/store/user/selectors';
 import Chart from 'chart.js/auto';
-import * as UserActions from '../../store/actions';
+import * as UserActions from '../../store/user/actions';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({

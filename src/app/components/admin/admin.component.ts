@@ -4,9 +4,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { IUser } from 'src/app/interfaces/user.interface';
-import { GlobalState } from 'src/app/store/reducers';
-import { selectActiveUserData, selectAllUsers } from 'src/app/store/selectors';
-import * as UserActions from '../../store/actions';
+import { GlobalState } from 'src/app/store/user/reducers';
+import { selectActiveUserData, selectAllUsers } from 'src/app/store/user/selectors';
+import * as UserActions from '../../store/user/actions';
 
 @Component({
   selector: 'app-admin',

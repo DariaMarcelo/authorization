@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { UserState } from 'src/app/store/reducers';
-import * as UserActions from '../../store/actions';
-import { selectActiveUserData } from 'src/app/store/selectors';
+import { UserState } from 'src/app/store/user/reducers';
+import * as UserActions from '../../store/user/actions';
+import * as AuthActions from "../../store/auth/actions";
+import { selectActiveUserData } from 'src/app/store/user/selectors';
 
 @Component({
   selector: 'app-login',

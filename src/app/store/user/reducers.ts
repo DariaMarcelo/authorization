@@ -1,7 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import { UserActions, DashboardActions } from './actions';
+import { AuthActions } from "../auth/actions";
 import { IUser } from 'src/app/interfaces/user.interface';
-import { IAssessment, IAssessmentReport } from "../interfaces/dashboard.interface";
+import { IAssessment, IAssessmentReport } from "../../interfaces/dashboard.interface";
 
 export interface UserState {
   user: IUser | null;
@@ -12,6 +13,7 @@ export interface UserState {
 
 export interface DashboardState {
   assessments: IAssessment[] | null;
+  assessmentSize: number;
   assessmentReport: IAssessmentReport | null;
   loading: boolean;
   error: string | null;
@@ -31,6 +33,7 @@ const initialUserState: UserState = {
 
 const initialDashboardState: DashboardState = {
   assessments: null,
+  assessmentSize: 0,
   assessmentReport: null,
   loading: false,
   error: null,
@@ -102,6 +105,7 @@ export const dashboardReducers = createReducer(
       ...state,
       loading: false,
       assessments: assessmentResponse,
+      assessmentSize: assessmentResponse.length,
       error: null,
     };
   }),

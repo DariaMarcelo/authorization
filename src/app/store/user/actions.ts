@@ -1,23 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { IUser } from 'src/app/interfaces/user.interface';
-import { IAssessment, IAssessmentReport } from "../interfaces/dashboard.interface";
+import { IAssessment, IAssessmentReport } from "../../interfaces/dashboard.interface";
 
 // User Actions
-
-export const login = createAction(
-  '[Assessment App] Login',
-  props<{ email: string; password: string }>(),
-);
-
-export const loginSuccess = createAction(
-  '[Assessment App] Login Success',
-  props<{ userResponse: IUser }>(),
-);
-
-export const loginError = createAction(
-  '[Assessment App] Login Error',
-  props<{ error: string }>(),
-);
 
 export const getUsers = createAction('[Assessment App] Get All Users');
 
@@ -32,9 +17,6 @@ export const usersLoadError = createAction(
 );
 
 export const UserActions = {
-  login,
-  loginSuccess,
-  loginError,
   getUsers,
   usersLoaded,
   usersLoadError,
