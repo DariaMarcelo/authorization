@@ -1,0 +1,86 @@
+.table-holder {
+  padding: 20px 15px;
+  border-radius: 5px;
+  margin: 0 45px 0 45px;
+}
+
+.mat-table {
+  display: table;
+  width: fit-content;
+}
+
+.table-wrapper {
+  width: fit-content;
+}
+
+.container.table {
+  width: max-content;
+}
+
+.list-title {
+  font-size: 35px;
+  font-weight: bold;
+  line-height: normal;
+  letter-spacing: 0.5px;
+  margin-left: 40%;
+}
+
+.title-wrapper {
+  width: 100%;
+  margin-top: 70px;
+}
+
+.mat-header-cell {
+  background-color: #393939;
+  color: white;
+  padding: 20px;
+}
+
+.id-column {
+  width: 15%;
+}
+
+.name-column {
+  width: 30%;
+}
+
+.resolved-column {
+  width: 15%;
+}
+
+.active-column {
+  width: 15%;
+}
+
+.image-column {
+  width: 20%;
+
+  & img {
+    height: 100px;
+  }
+}
+
+td {
+  text-align: center;
+  padding: 10px;
+}
+
+th {
+  text-align: center;
+  padding: 30px;
+}
+
+img {
+  width: 70%;
+  height: 90%;
+}
+
+mat-paginator {
+  margin: 20px 28%;
+  position: absolute;
+}
+
+.spinner-wrapper {
+  margin-top: 200px;
+  margin-left: 50%;
+}

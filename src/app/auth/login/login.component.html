@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card">
+        <div class="card-header">
+          <h3>Log In</h3>
+        </div>
+        <div class="card-body">
+          <form class="form" [formGroup]="userLoginForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <mat-form-field
+                class="example-full-width" appearance="outline"
+              >
+                <mat-label>Email</mat-label>
+                <input
+                  autocomplete="email"
+                  matInput
+                  class="form-control"
+                  type="email"
+                  formControlName="email"
+                  placeholder="Email"
+                />
+              </mat-form-field>
+            </div>
+            <mat-error
+              class="text-danger"
+              *ngIf="userLoginForm.controls['email'].invalid && (userLoginForm.controls['email'].dirty || userLoginForm.controls['email'].touched)"
+            >
+              Email is required
+            </mat-error>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" class="form-control" type="password" placeholder="Password"/>
+            </mat-form-field>
+            <mat-error
+              *ngIf="userLoginForm.controls['password'].invalid && (userLoginForm.controls['password'].dirty || userLoginForm.controls['password'].touched)"
+            >
+              Password is required
+            </mat-error>
+
+            <div class="form-group" id="submit-button-div">
+              <button
+                mat-raised-button color="primary" class="btn btn-primary" type="submit"
+                [disabled]="!userLoginForm.valid"
+              >
+                Log In
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
